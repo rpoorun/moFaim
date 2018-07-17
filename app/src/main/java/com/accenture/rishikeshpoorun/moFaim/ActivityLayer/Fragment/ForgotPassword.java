@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.MainActivity;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
@@ -62,6 +63,16 @@ public class ForgotPassword extends Fragment implements View.OnClickListener {
                     break;
                 }
 
+            case R.id.button_action_send_email:
+                try {
+                    //dummy function to be impl
+                    Toast.makeText(getActivity(),"Password Reset Email Sent", Toast.LENGTH_SHORT).show();
+
+                }catch (Exception e){
+                    mStatus.setText(e.getMessage());
+                }finally {
+                    break;
+                }
         }
     }
 }

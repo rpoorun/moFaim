@@ -33,15 +33,19 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    //encryption library
+    //Encryption library
     implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 
-
+    //Room Persistence and RxJava library
     implementation 'com.android.support:design:28.0.0-alpha3'
     implementation 'android.arch.persistence.room:runtime:1.1.0-alpha2'
-//    implementation 'android.arch.persistence.room:rxjava2:1.1.0-alpha2'
+    implementation 'android.arch.persistence.room:rxjava2:1.1.0-alpha2'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.0-alpha2'
 
-/*    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'*/
+    //Async Java library
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    //Recyler view Library
+    implementation 'com.android.support:recyclerview-v7:28.0.0-alpha3'
 }

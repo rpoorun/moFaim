@@ -6,14 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Login;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.RestaurantService;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.UserService;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.DatabaseUtility;
-import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.MoFaimDatabase;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
 public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     public static UserService userService;
+    public static RestaurantService restaurantService;
     private MoFaimDatabase database;
 
     @Override
@@ -30,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         //init service layer with database
         userService = new UserService(database);
+        restaurantService = new RestaurantService(database);
 
         //population database tables
-        DatabaseUtility.populateUserTable(database);
+        DatabaseUtility.populateUserTable();
+        DatabaseUtility.populateRestaurantTable();
 
         fragmentManager = getSupportFragmentManager();
 

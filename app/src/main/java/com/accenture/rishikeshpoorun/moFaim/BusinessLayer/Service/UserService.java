@@ -9,7 +9,7 @@ import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidEmail
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidPasswordException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidUsernameException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.PasswordEncryption;
-import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.MoFaimDatabase;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.UserDAO;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 
