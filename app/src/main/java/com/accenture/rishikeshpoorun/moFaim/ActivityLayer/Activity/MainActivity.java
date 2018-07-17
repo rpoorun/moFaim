@@ -19,7 +19,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userDatabase = Room.databaseBuilder(getApplicationContext(), UserDatabase.class, "moFaim.db").allowMainThreadQueries().build();
+        // NOTE: using the database connectivity on the main thread since SQLite is cached on the phone
+        // NOTE: Need to use Async and background thread for other database
+        userDatabase = Room.databaseBuilder(getApplicationContext(), UserDatabase.class, "moFaim.db")
+                .allowMainThreadQueries()
+                .build();
+        
         fragmentManager = getSupportFragmentManager();
 
         if(findViewById(R.id.fragmentLayout_main) != null){

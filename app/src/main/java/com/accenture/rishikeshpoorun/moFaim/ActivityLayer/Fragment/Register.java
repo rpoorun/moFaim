@@ -45,10 +45,15 @@ public class Register extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    /**
+     * The OnClick method evaluate which button was tapped/clicked to execute the corresponding actions
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.button_to_login:
+                // When the Login button is tapped/Clicked the Fragment is replaced  with login screen
                 MainActivity.fragmentManager.beginTransaction()
                         .replace(R.id.fragmentLayout_main, new Login())
                         .addToBackStack(null)
@@ -63,6 +68,7 @@ public class Register extends Fragment implements View.OnClickListener {
                 User user= new User(username, email, password);
 
                 MainActivity.userDatabase.userDAO().insertUser(user);
+                    // Toast prints a notification overlay on the main activity
                     Toast.makeText(getActivity(), "User Added Successfully", Toast.LENGTH_LONG).show();
                 MainActivity.fragmentManager.beginTransaction()
                         .replace(R.id.fragmentLayout_main, new Login())

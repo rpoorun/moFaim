@@ -2,6 +2,7 @@ package com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 
@@ -24,9 +25,10 @@ public class User {
     @ColumnInfo(name = "PASSWORD")
     private String password;
 
+
     public User() {
     }
-
+    @Ignore
     public User(String userName, String email, String password) {
         this.userName = userName;
         this.email = email;
