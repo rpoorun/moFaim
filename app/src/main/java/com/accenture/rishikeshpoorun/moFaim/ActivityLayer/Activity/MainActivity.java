@@ -7,9 +7,8 @@ import android.os.Bundle;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Login;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.UserService;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.DatabaseUtility;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.MoFaimDatabase;
-import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.UserDatabase;
-import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
         //init service layer with database
         userService = new UserService(database);
+
+        //population database tables
+        DatabaseUtility.populateUserTable(database);
 
         fragmentManager = getSupportFragmentManager();
 

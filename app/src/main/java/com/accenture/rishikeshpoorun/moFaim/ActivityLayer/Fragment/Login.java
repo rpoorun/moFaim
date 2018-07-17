@@ -1,6 +1,5 @@
 package com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.Dashboard;
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.MainActivity;
-import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidEmailException;
-import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidPasswordException;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
@@ -25,7 +20,7 @@ import com.accenture.rishikeshpoorun.moFaim.R;
 public class Login extends Fragment implements View.OnClickListener {
     private Button buttonToRegister, buttonActionLogin;
     private EditText mEmail, mPassword;
-    private TextView mStatus;
+    private TextView mStatus, mToForgotPassword;
 
     public Login() {
         // Required empty public constructor
@@ -44,9 +39,11 @@ public class Login extends Fragment implements View.OnClickListener {
         mEmail = view.findViewById(R.id.editText_email);
         mPassword = view.findViewById(R.id.editText_password);
         mStatus = view.findViewById(R.id.textView_status);
+        mToForgotPassword = view.findViewById(R.id.textView_to_forgot_password);
 
         buttonToRegister.setOnClickListener(this);
         buttonActionLogin.setOnClickListener(this);
+        mToForgotPassword.setOnClickListener(this);
 
         return view;
     }
@@ -80,6 +77,11 @@ public class Login extends Fragment implements View.OnClickListener {
                     break;
                 }
 
+            case R.id.textView_to_forgot_password:
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmentLayout_main, new ForgotPassword())
+                        .addToBackStack(null)
+                        .commit();
+                break;
         }
     }
 }
