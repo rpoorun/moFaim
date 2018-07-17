@@ -61,8 +61,8 @@ public class Login extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.button_action_login:
-                User user = MainActivity.userDatabase.userDAO()
-                        .selectUserAndPassword(mEmail.getText().toString(), mPassword.getText().toString());
+                User user = MainActivity.userService
+                        .checkLogin(mEmail.getText().toString(), mPassword.getText().toString());
 
                 if(user == null){
                     Toast.makeText(getActivity(),"User Login does not Exist", Toast.LENGTH_LONG).show();

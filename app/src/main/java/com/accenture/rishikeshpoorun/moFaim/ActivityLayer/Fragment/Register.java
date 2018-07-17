@@ -64,10 +64,9 @@ public class Register extends Fragment implements View.OnClickListener {
                 String username = mUsername.getText().toString();
                 String email = mEmail.getText().toString();
                 String password = mPassword.getText().toString();
+                String confirmPassword = mConfirmPassword.getText().toString();
 
-                User user= new User(username, email, password);
-
-                MainActivity.userDatabase.userDAO().insertUser(user);
+                MainActivity.userService.addUser(username, email, password, confirmPassword);
                     // Toast prints a notification overlay on the main activity
                     Toast.makeText(getActivity(), "User Added Successfully", Toast.LENGTH_LONG).show();
                 MainActivity.fragmentManager.beginTransaction()

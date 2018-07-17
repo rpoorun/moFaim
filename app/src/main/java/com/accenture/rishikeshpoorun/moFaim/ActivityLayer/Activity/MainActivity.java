@@ -6,25 +6,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Login;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.UserService;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.UserDatabase;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
 public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
-
-    public static UserDatabase userDatabase;
+    public static UserService userService;
+    private MoFaimDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //init database connectivity
         // NOTE: using the database connectivity on the main thread since SQLite is cached on the phone
         // NOTE: Need to use Async and background thread for other database
-        userDatabase = Room.databaseBuilder(getApplicationContext(), UserDatabase.class, "moFaim.db")
+        database = Room.databaseBuilder(getApplicationContext(), MoFaimDatabase.class, "moFaim.db")
                 .allowMainThreadQueries()
                 .build();
-        
+
+        //init service layer with database
+        userService = new UserService(database);
+
         fragmentManager = getSupportFragmentManager();
 
         if(findViewById(R.id.fragmentLayout_main) != null){

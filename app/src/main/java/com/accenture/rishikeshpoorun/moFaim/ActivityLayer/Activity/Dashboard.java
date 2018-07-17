@@ -20,8 +20,8 @@ public class Dashboard extends AppCompatActivity {
         Intent previous = getIntent();
         String email = previous.getStringExtra("Email");
 
-        User user = MainActivity.userDatabase.userDAO().getUserByEmail(email);
-
+        //User user = MainActivity.userDatabase.userDAO().getUserByEmail(email);
+        User user = MainActivity.userService.searchUserByEmail(email);
         profileName = (TextView) findViewById(R.id.textView_username);
         profileName.setText(user.getUserName());
 
