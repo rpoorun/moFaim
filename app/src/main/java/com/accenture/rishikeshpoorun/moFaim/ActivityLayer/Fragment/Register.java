@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.MainActivity;
-import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
 /**
@@ -20,6 +20,7 @@ import com.accenture.rishikeshpoorun.moFaim.R;
 public class Register extends Fragment implements View.OnClickListener {
     private Button buttonToLogin, buttonActionRegister;
     private EditText mUsername, mEmail, mPassword, mConfirmPassword;
+    private TextView mStatus;
 
     public Register() {
         // Required empty public constructor
@@ -39,6 +40,7 @@ public class Register extends Fragment implements View.OnClickListener {
         mEmail = view.findViewById(R.id.editText_email);
         mPassword = view.findViewById(R.id.editText_password);
         mConfirmPassword = view.findViewById(R.id.editText_confirm_password);
+        mStatus = view.findViewById(R.id.textView_status);
 
         buttonToLogin.setOnClickListener(this);
         buttonActionRegister.setOnClickListener(this);
@@ -66,14 +68,26 @@ public class Register extends Fragment implements View.OnClickListener {
                 String password = mPassword.getText().toString();
                 String confirmPassword = mConfirmPassword.getText().toString();
 
-                MainActivity.userService.addUser(username, email, password, confirmPassword);
+                try {
+                    MainActivity.userService.addUser(username, email, password, confirmPassword);
                     // Toast prints a notification overlay on the main activity
                     Toast.makeText(getActivity(), "User Added Successfully", Toast.LENGTH_LONG).show();
-                MainActivity.fragmentManager.beginTransaction()
-                        .replace(R.id.fragmentLayout_main, new Login())
-                        .addToBackStack(null)
-                        .commit();
-                break;
+                    MainActivity.fragmentManager.beginTransaction()
+                            .replace(R.id.fragmentLayout_main, new Login())
+                            .addToBackStack(null)
+                            .commit();
+
+                } catch (Exception e) {
+                    //if fields are invalid, print to status
+                    mStatus.setText(e.getMessage());
+
+                    //reset password fields
+                    mPassword.setText("");
+                    mConfirmPassword.setText("");
+
+                } finally {
+                    break;
+                }
 
         }
     }

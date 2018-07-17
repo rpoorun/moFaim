@@ -19,6 +19,18 @@
         android:textSize="24sp"
         android:textStyle="italic" />
 
+    <TextView
+        android:id="@+id/textView_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="95dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="11sp"
+        android:textStyle="italic" />
+
     <EditText
         android:id="@+id/editText_username"
         android:layout_width="match_parent"
@@ -80,4 +92,5 @@
         android:layout_marginRight="100dp"
         android:layout_marginTop="440dp"
         android:text="Log In" />
+
 </FrameLayout>

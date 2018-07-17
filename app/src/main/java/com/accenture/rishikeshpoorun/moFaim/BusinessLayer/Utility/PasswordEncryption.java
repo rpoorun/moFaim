@@ -11,6 +11,11 @@ public class PasswordEncryption {
 
     public static String encrypt(String password){
         return
-                BCrypt.hashpw(password, BCrypt.gensalt(12));
+                BCrypt.hashpw(password, BCrypt.gensalt(5));
+    }
+
+    public static Boolean checkPassword(String password, String encryptedPassword){
+        return
+                BCrypt.checkpw(password, encryptedPassword);
     }
 }

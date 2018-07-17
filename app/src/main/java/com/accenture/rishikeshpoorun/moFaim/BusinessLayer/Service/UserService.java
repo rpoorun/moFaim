@@ -1,12 +1,12 @@
 package com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service;
 
-import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.util.Patterns;
 
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.EmailConflictException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.EmptyFieldException;
-import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvaliEmailFormatException;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidEmailException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidPasswordException;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.PasswordEncryption;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.UserDAO;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
@@ -28,7 +28,7 @@ public class UserService {
      * @param password
      * @param confirmPassword
      */
-    public void addUser(String fullname, String email, String password, String confirmPassword) throws EmptyFieldException, InvaliEmailFormatException, InvalidPasswordException {
+    public void addUser(String fullname, String email, String password, String confirmPassword) throws EmptyFieldException, InvalidEmailException, InvalidPasswordException, EmailConflictException {
 
         //validate for complete fields
         validateNotNullFields(fullname,email,password,confirmPassword);
@@ -36,21 +36,47 @@ public class UserService {
         //validate for proper email address
         validateProperEmailAddress(email);
 
+        //validate if email already exist in database
+        validateEmailAlreadyExist(email);
+
         //validate matching password
         validateMatchPassword(password, confirmPassword);
 
-        User u = new User(fullname, email, password);
+        String encryptedPassword = PasswordEncryption.encrypt(password);
+
+        User u = new User(fullname, email, encryptedPassword);
 
             userDao.insertUser(u);
     }
 
 
-    public User searchUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+    public User fetchUserById(Long id){
+
+        return userDao.getUserByID(id);
     }
 
-    public User checkLogin(String email, String password) {
-        return  userDao.selectUserAndPassword(email, password);
+    public User searchUserByEmail(String email) throws InvalidEmailException {
+        User u = userDao.getUserByEmail(email);
+
+        if(u != null){
+            return u;
+        }
+        else {
+            throw new InvalidEmailException("This Email Address account does not exist");
+        }
+    }
+
+    public User checkLogin(String email, String password) throws InvalidPasswordException, InvalidEmailException {
+
+        User user = searchUserByEmail(email);
+        Boolean flag = PasswordEncryption.checkPassword(password, user.getPassword());
+
+        if(flag){
+            return user;
+        }
+        else{
+            throw new InvalidPasswordException("Invalid Password for this Email account");
+        }
     }
 
     /**
@@ -88,16 +114,16 @@ public class UserService {
     /**
      * @param email
      * @return True if email format is valid
-     * @throws InvaliEmailFormatException
+     * @throws InvalidEmailException
      */
-    private boolean validateProperEmailAddress(String email) throws InvaliEmailFormatException {
+    private boolean validateProperEmailAddress(String email) throws InvalidEmailException {
 
         if(Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             return true;
         }
         else{
-            throw new InvaliEmailFormatException("Please insert a valid Email Address");
+            throw new InvalidEmailException("Please insert a valid Email Address");
         }
     }
 
@@ -115,4 +141,17 @@ public class UserService {
             throw new InvalidPasswordException("Password does not match");
         }
     }
+
+
+   private boolean validateEmailAlreadyExist(String email) throws EmailConflictException, InvalidEmailException {
+        User u = userDao.getUserByEmail(email);
+
+        if(u == null){
+            return true;
+        }
+        else{
+            throw new EmailConflictException("This Email Address is already registered");
+        }
+   }
+
 }

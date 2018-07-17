@@ -22,7 +22,7 @@ public class UserRepository {
         return mInstance;
     }
 
-    public User getUserByID(Integer userId){
+    public User getUserByID(Long userId){
         return userDAO.getUserByID(userId);
     }
 

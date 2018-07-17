@@ -13,7 +13,7 @@ import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 public interface UserDAO {
 
     @Query("SELECT * FROM USER_TABLE WHERE USER_ID =:userId")
-    User getUserByID(Integer userId);
+    User getUserByID(Long userId);
 
     @Query("SELECT * FROM USER_TABLE WHERE EMAIL =:email AND PASSWORD =:password")
     User selectUserAndPassword(String email, String password);

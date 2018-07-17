@@ -18,12 +18,11 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         Intent previous = getIntent();
-        String email = previous.getStringExtra("Email");
+        Long userId = Long.valueOf(previous.getStringExtra("userId"));
 
-        //User user = MainActivity.userDatabase.userDAO().getUserByEmail(email);
-        User user = MainActivity.userService.searchUserByEmail(email);
+        User user = MainActivity.userService.fetchUserById(userId);
         profileName = (TextView) findViewById(R.id.textView_username);
-        profileName.setText(user.getUserName());
+        profileName.setText(user.toString());
 
     }
 }

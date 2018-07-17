@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.Dashboard;
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.MainActivity;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidEmailException;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidPasswordException;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
@@ -22,6 +25,7 @@ import com.accenture.rishikeshpoorun.moFaim.R;
 public class Login extends Fragment implements View.OnClickListener {
     private Button buttonToRegister, buttonActionLogin;
     private EditText mEmail, mPassword;
+    private TextView mStatus;
 
     public Login() {
         // Required empty public constructor
@@ -39,6 +43,7 @@ public class Login extends Fragment implements View.OnClickListener {
 
         mEmail = view.findViewById(R.id.editText_email);
         mPassword = view.findViewById(R.id.editText_password);
+        mStatus = view.findViewById(R.id.textView_status);
 
         buttonToRegister.setOnClickListener(this);
         buttonActionLogin.setOnClickListener(this);
@@ -61,18 +66,20 @@ public class Login extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.button_action_login:
-                User user = MainActivity.userService
-                        .checkLogin(mEmail.getText().toString(), mPassword.getText().toString());
 
-                if(user == null){
-                    Toast.makeText(getActivity(),"User Login does not Exist", Toast.LENGTH_LONG).show();
+                try {
+                  User user = MainActivity.userService
+                            .checkLogin(mEmail.getText().toString(), mPassword.getText().toString());
+
+                    Intent toDashboard = new Intent(getActivity(), Dashboard.class);
+                    startActivity(toDashboard.putExtra("userId", user.getUserId().toString()));
+
+                } catch (Exception e) {
+                    mStatus.setText(e.getMessage());
+                } finally {
                     break;
                 }
-                else{
-                    Intent toDashboard = new Intent(getActivity(), Dashboard.class);
-                    startActivity(toDashboard.putExtra("Email", user.getEmail()));
 
-                }
         }
     }
 }
