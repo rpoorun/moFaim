@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface RestaurantDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRestaurant(Restaurant restaurant);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

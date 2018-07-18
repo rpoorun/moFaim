@@ -8,10 +8,13 @@ import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.EmptyFieldEx
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidEmailException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidPasswordException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidUsernameException;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.InputValidation;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.PasswordEncryption;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.UserDAO;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
+
+import java.util.List;
 
 import static com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.PasswordEncryption.encrypt;
 
@@ -35,19 +38,19 @@ public class UserService {
     public void addUser(String fullname, String email, String password, String confirmPassword) throws EmptyFieldException, InvalidEmailException, InvalidPasswordException, EmailConflictException {
 
         //validate for complete fields
-        validateUsernameNotNull(fullname);
-        validateEmailAlreadyExist(email);
-        validatePasswordNotNull(password);
-        validateConfirmPasswordNotNull(confirmPassword);
+        InputValidation.validateUsernameNotNull(fullname);
+        InputValidation.validateEmailAlreadyExist(email, userDao);
+        InputValidation.validatePasswordNotNull(password);
+        InputValidation.validateConfirmPasswordNotNull(confirmPassword);
 
         //validate for proper email address
-        validateProperEmailAddress(email);
+        InputValidation.validateProperEmailAddress(email);
 
         //validate if email already exist in database
-        validateEmailAlreadyExist(email);
+        InputValidation.validateEmailAlreadyExist(email,userDao);
 
         //validate matching password
-        validateMatchPassword(password, confirmPassword);
+        InputValidation.validateMatchPassword(password, confirmPassword);
 
         String encryptedPassword = encrypt(password);
 
@@ -75,8 +78,8 @@ public class UserService {
 
     public User checkLogin(String email, String password) throws InvalidPasswordException, InvalidEmailException, EmptyFieldException {
         //validate fields are not null
-        validatePasswordNotNull(password);
-        validateEmailNotNull(email);
+        InputValidation.validatePasswordNotNull(password);
+        InputValidation.validateEmailNotNull(email);
 
         User user = searchUserByEmail(email);
         Boolean flag = PasswordEncryption.checkPassword(password, user.getPassword());
@@ -92,8 +95,8 @@ public class UserService {
 
     public boolean matchUsernameAndEmail(String username, String email) throws EmptyFieldException, InvalidUsernameException, InvalidEmailException {
         //validate fields are not empty
-        validateUsernameNotNull(username);
-        validateEmailNotNull(email);
+        InputValidation.validateUsernameNotNull(username);
+        InputValidation.validateEmailNotNull(email);
 
         User u = MainActivity.userService.searchUserByEmail(email);
         //validate if username and email matches
@@ -107,11 +110,11 @@ public class UserService {
 
     public boolean setNewPassword(User user, String password, String confirmPassword) throws EmptyFieldException, InvalidPasswordException {
         //validate fields
-        validatePasswordNotNull(password);
-        validateConfirmPasswordNotNull(confirmPassword);
+        InputValidation.validatePasswordNotNull(password);
+        InputValidation.validateConfirmPasswordNotNull(confirmPassword);
 
         //validate both field matches
-        validateMatchPassword(password, confirmPassword);
+        InputValidation.validateMatchPassword(password, confirmPassword);
 
         String encryptPassword = PasswordEncryption.encrypt(password);
 
@@ -122,83 +125,8 @@ public class UserService {
         return true;
     }
 
-    /************************************************
-     * Private validation methods
-     ************************************************/
-
-    /**
-     * Validation method to check if all fields are complete
-     * @return True if field parameters are not null
-     * @throws EmptyFieldException
-     */
-    private boolean validateUsernameNotNull(String fullname) throws EmptyFieldException{
-        if(fullname.isEmpty() || fullname == null){
-            throw new EmptyFieldException("The Full Name field cannot be empty");
-        }
-        return true;
+    public List<User> getAllUsers(){
+        return userDao.getAllUsers();
     }
-
-    private boolean validateEmailNotNull(String email)throws EmptyFieldException{
-        if(email.isEmpty() || email == null){
-            throw new EmptyFieldException("The Email field cannot be empty");
-        }
-        return true;
-    }
-
-    private boolean validatePasswordNotNull(String password) throws EmptyFieldException{
-        if(password.isEmpty() || password == null){
-            throw new EmptyFieldException("The Password field cannot be empty");
-        }
-        return true;
-    }
-    private boolean validateConfirmPasswordNotNull( String confirmPassword) throws EmptyFieldException {
-        if(confirmPassword.isEmpty() || confirmPassword == null){
-            throw new EmptyFieldException("The Confirm Password field cannot be empty");
-        }
-      return true;
-    }
-
-    /**
-     * @param email
-     * @return True if email format is valid
-     * @throws InvalidEmailException
-     */
-    private boolean validateProperEmailAddress(String email) throws InvalidEmailException {
-
-        if(Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {
-            return true;
-        }
-        else{
-            throw new InvalidEmailException("Please insert a valid Email Address");
-        }
-    }
-
-    /**
-     * @param password
-     * @param confirmPassword
-     * @return True is both password field matches
-     * @throws InvalidPasswordException
-     */
-    private boolean validateMatchPassword(String password, String confirmPassword) throws InvalidPasswordException {
-        if(password.contentEquals(confirmPassword)){
-            return true;
-        }
-        else{
-            throw new InvalidPasswordException("Password does not match");
-        }
-    }
-
-
-   private boolean validateEmailAlreadyExist(String email) throws EmailConflictException, InvalidEmailException {
-        User u = userDao.getUserByEmail(email);
-
-        if(u == null){
-            return true;
-        }
-        else{
-            throw new EmailConflictException("This Email Address is already registered");
-        }
-   }
 
 }

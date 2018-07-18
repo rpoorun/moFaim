@@ -20,6 +20,9 @@ public class Restaurant {
     @ColumnInfo(name = "ADDRESS")
     private String address;
 
+    @ColumnInfo(name = "STYLE")
+    private String style;
+
     @ColumnInfo(name = "PHONE_NUMBER")
     private Long phoneNumber;
 
@@ -33,20 +36,21 @@ public class Restaurant {
     private Float longitude;
 
     @ColumnInfo(name = "PHOTO")
-    private byte[] photo;
+    private String photoName;
 
     public Restaurant() {
     }
 
     @Ignore
-    public Restaurant(String restaurantName, String address, Long phoneNumber, Double overallRating, Float latitude, Float longitude, byte[] photo) {
+    public Restaurant(String restaurantName, String address, String style ,Long phoneNumber, Double overallRating, Float latitude, Float longitude, String photoName) {
         this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.overallRating = overallRating;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.photo = photo;
+        this.photoName = photoName;
+        this.style = style;
     }
 
     public Long getRestaurantId() {
@@ -105,12 +109,20 @@ public class Restaurant {
         this.longitude = longitude;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public String getPhotoName() {
+        return photoName;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 
     @Override
@@ -123,7 +135,7 @@ public class Restaurant {
                 ", overallRating=" + overallRating +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", photo=" + Arrays.toString(photo) +
+                ", photoName=" + photoName +
                 '}';
     }
 }

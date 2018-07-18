@@ -58,7 +58,6 @@ public class Register extends Fragment implements View.OnClickListener {
                 // When the Login button is tapped/Clicked the Fragment is replaced  with login screen
                 MainActivity.fragmentManager.beginTransaction()
                         .replace(R.id.fragmentLayout_main, new Login())
-                        .addToBackStack(null)
                         .commit();
                 break;
 
@@ -74,7 +73,6 @@ public class Register extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "User Added Successfully", Toast.LENGTH_LONG).show();
                     MainActivity.fragmentManager.beginTransaction()
                             .replace(R.id.fragmentLayout_main, new Login())
-                            .addToBackStack(null)
                             .commit();
 
                 } catch (Exception e) {

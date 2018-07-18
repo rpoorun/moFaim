@@ -24,10 +24,11 @@ public class DatabaseUtility {
         userService = MainActivity.userService;
 
         try{
-            userService.addUser("admin", "admin@admin.com", "admin", "admin");
-            userService.addUser("foo", "foo@foo.com", "foo", "foo");
-            userService.addUser("moo", "moo@moo.com", "moo", "moo");
-
+            if(userService.getAllUsers().isEmpty()) {
+                userService.addUser("admin", "admin@admin.com", "admin", "admin");
+                userService.addUser("foo", "foo@foo.com", "foo", "foo");
+                userService.addUser("moo", "moo@moo.com", "moo", "moo");
+            }
         }catch (Exception e){
             //do nothing
         }
@@ -41,14 +42,16 @@ public class DatabaseUtility {
         restaurantService = MainActivity.restaurantService;
 
         try{
-            restaurantService.addRestaurant(new Restaurant("Mine Payo", null, null, null, null, null, null));
-            restaurantService.addRestaurant(new Restaurant("Tamil League", null, null, null, null, null, null));
-            restaurantService.addRestaurant(new Restaurant("Mamou", null, null, null, null, null, null));
-            restaurantService.addRestaurant(new Restaurant("Gloria", null, null, null, null, null, null));
-            restaurantService.addRestaurant(new Restaurant("Dhol puri", null, null, null, null, null, null));
-            restaurantService.addRestaurant(new Restaurant("Rodrigue", null, null, null, null, null, null));
-            restaurantService.addRestaurant(new Restaurant("Ken", null, null, null, null, null, null));
+            if(restaurantService.getAllRestaurant().isEmpty()) {
 
+                restaurantService.addRestaurant(new Restaurant("Mine Payo", "Stadium Road, Reduit, Moka", "Street Food", null, null, null, null, "minepayo"));
+                restaurantService.addRestaurant(new Restaurant("Tamil League", "Tamil Road, Reduit", "Mauritian Cuisine & Snack", null, null, null, null, "tamilleague"));
+                restaurantService.addRestaurant(new Restaurant("Mamou", null, "TukShop", null, null, null, null, "mamou"));
+                restaurantService.addRestaurant(new Restaurant("Gloria", "Royal Road, Reduit", "Fast Food", null, null, null, null, "gloria"));
+                restaurantService.addRestaurant(new Restaurant("Dhol puri", "Royal Road, Reduit", "Snack", null, null, null, null, "dholpuri"));
+                restaurantService.addRestaurant(new Restaurant("Rodrigues", null, "Mixed", null, null, null, null, "rodrigues"));
+                restaurantService.addRestaurant(new Restaurant("Ken", null, "Mauritian Cuisine", null, null, null, null, "ken"));
+            }
 
         }catch (Exception e){
             //do nothing

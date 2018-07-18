@@ -44,7 +44,7 @@ public class RestaurantRecyclerView extends Fragment {
         //populate the list from database
         list = MainActivity.restaurantService.getAllRestaurant();
         //init the adapter to convert the list to viewHolder or component
-        adapter = new RestaurantRecyclerViewAdapter(list);
+        adapter = new RestaurantRecyclerViewAdapter(list, getContext());
         //standardize the sizes
         recyclerView.setHasFixedSize(true);
         //parse the adapter to populate each viewHolder

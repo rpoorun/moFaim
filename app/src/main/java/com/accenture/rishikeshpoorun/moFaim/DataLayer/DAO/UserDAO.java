@@ -9,6 +9,8 @@ import android.arch.persistence.room.Update;
 
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 
+import java.util.List;
+
 
 @Dao
 public interface UserDAO {
@@ -30,4 +32,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM USER_TABLE WHERE EMAIL =:email")
     User getUserByEmail(String email);
+
+    @Query("SELECT * FROM USER_TABLE")
+    List<User> getAllUsers();
 }

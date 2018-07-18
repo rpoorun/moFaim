@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     public static UserService userService;
     public static RestaurantService restaurantService;
-    public static SharedPreferences inSession;
     private MoFaimDatabase database;
 
 
@@ -34,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
+        //init session for user logging
+        getSession();
+
         //init service layer with database
         userService = new UserService(database);
         restaurantService = new RestaurantService(database);
@@ -44,35 +46,29 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        //init session for user logging
-        getSession();
 
-        //if (inSession.getBoolean("userLogged", false)) {
-            if(findViewById(R.id.fragmentLayout_main) != null){
+            if (findViewById(R.id.fragmentLayout_main) != null) {
 
-                if(savedInstanceState != null){
+                if (savedInstanceState != null) {
                     return;
                 }
 
-                    fragmentManager.beginTransaction().add(R.id.fragmentLayout_main, new Login()).commit();
+                fragmentManager.beginTransaction().add(R.id.fragmentLayout_main, new Login()).commit();
 
-        }
-       /* else if (inSession.getBoolean("userLogged", true)){
-            Intent toDashboard = new Intent(this, Dashboard.class);
-            startActivity(toDashboard);
             }
-        }*/
+
+
+
     }
 
-    private void getSession() {
 
-        if (inSession == null) {
-            inSession = getSharedPreferences("inSession", MODE_PRIVATE);
-            SharedPreferences.Editor editor = inSession.edit();
-            editor.putBoolean("userLogged", false);
-            editor.putString("userId", null);
-            editor.apply();
-        }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.gc();
+        Intent stay = new Intent(this, MainActivity.class);
+        startActivity(stay);
+        finish();
     }
 }

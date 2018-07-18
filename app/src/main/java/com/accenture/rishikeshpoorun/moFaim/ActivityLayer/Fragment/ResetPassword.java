@@ -2,6 +2,7 @@ package com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -64,8 +65,9 @@ public class ResetPassword extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(),"Password changed successfully", Toast.LENGTH_LONG).show();
 
                     MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmentLayout_main, new Login())
-                            .addToBackStack(null)
+
                             .commit();
+
                 } catch (Exception e) {
                     mStatus.setText(e.getMessage());
                 } finally {

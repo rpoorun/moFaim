@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7ec6126d3f833bd6f783b3a6821e821d",
+    "identityHash": "32c5e6abdf504309d493902b7f7a47f8",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "RESTAURANT_TABLE",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`RESTAURANT_ID` INTEGER PRIMARY KEY AUTOINCREMENT, `RESTAURANT_NAME` TEXT, `ADDRESS` TEXT, `PHONE_NUMBER` INTEGER, `RATING` REAL, `LATITUDE` REAL, `LONGITUDE` REAL, `PHOTO` BLOB)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`RESTAURANT_ID` INTEGER PRIMARY KEY AUTOINCREMENT, `RESTAURANT_NAME` TEXT, `ADDRESS` TEXT, `STYLE` TEXT, `PHONE_NUMBER` INTEGER, `RATING` REAL, `LATITUDE` REAL, `LONGITUDE` REAL, `PHOTO` TEXT)",
         "fields": [
           {
             "fieldPath": "restaurantId",
@@ -61,6 +61,12 @@
           {
             "fieldPath": "address",
             "columnName": "ADDRESS",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "style",
+            "columnName": "STYLE",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -89,9 +95,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "photo",
+            "fieldPath": "photoName",
             "columnName": "PHOTO",
-            "affinity": "BLOB",
+            "affinity": "TEXT",
             "notNull": false
           }
         ],
@@ -107,7 +113,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7ec6126d3f833bd6f783b3a6821e821d\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"32c5e6abdf504309d493902b7f7a47f8\")"
     ]
   }
 }

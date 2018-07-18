@@ -57,6 +57,7 @@ public class ForgotPassword extends Fragment implements View.OnClickListener {
                             .addToBackStack(null)
                             .commit();
 
+
                 } catch (Exception e){
                     mStatus.setText(e.getMessage());
                 }finally {
