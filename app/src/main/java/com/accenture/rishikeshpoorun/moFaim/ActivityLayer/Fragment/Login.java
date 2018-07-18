@@ -68,6 +68,11 @@ public class Login extends Fragment implements View.OnClickListener {
                   User user = MainActivity.userService
                             .checkLogin(mEmail.getText().toString(), mPassword.getText().toString());
 
+                  //if checklogin validate executes the generate session
+                    MainActivity.inSession.edit().putString("userId", user.getUserId().toString());
+                    MainActivity.inSession.edit().putBoolean("userLogged", true);
+
+
                     Intent toDashboard = new Intent(getActivity(), Dashboard.class);
                     startActivity(toDashboard.putExtra("userId", user.getUserId().toString()));
 

@@ -1,6 +1,8 @@
 package com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     public static UserService userService;
     public static RestaurantService restaurantService;
+    public static SharedPreferences inSession;
     private MoFaimDatabase database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +44,35 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        if(findViewById(R.id.fragmentLayout_main) != null){
+        //init session for user logging
+        getSession();
 
-            if(savedInstanceState != null){
-                return;
-            }
+        //if (inSession.getBoolean("userLogged", false)) {
+            if(findViewById(R.id.fragmentLayout_main) != null){
 
-            fragmentManager.beginTransaction().add(R.id.fragmentLayout_main, new Login()).commit();
+                if(savedInstanceState != null){
+                    return;
+                }
+
+                    fragmentManager.beginTransaction().add(R.id.fragmentLayout_main, new Login()).commit();
+
         }
+       /* else if (inSession.getBoolean("userLogged", true)){
+            Intent toDashboard = new Intent(this, Dashboard.class);
+            startActivity(toDashboard);
+            }
+        }*/
+    }
+
+    private void getSession() {
+
+        if (inSession == null) {
+            inSession = getSharedPreferences("inSession", MODE_PRIVATE);
+            SharedPreferences.Editor editor = inSession.edit();
+            editor.putBoolean("userLogged", false);
+            editor.putString("userId", null);
+            editor.apply();
+        }
+
     }
 }
