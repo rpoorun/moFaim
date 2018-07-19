@@ -1,6 +1,7 @@
 package com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.StackView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,9 +73,10 @@ public class Register extends Fragment implements View.OnClickListener {
                     MainActivity.userService.addUser(username, email, password, confirmPassword);
                     // Toast prints a notification overlay on the main activity
                     Toast.makeText(getActivity(), "User Added Successfully", Toast.LENGTH_LONG).show();
-                    MainActivity.fragmentManager.beginTransaction()
-                            .replace(R.id.fragmentLayout_main, new Login())
-                            .commit();
+                    Intent toMain = new Intent(getContext(), MainActivity.class);
+                    MainActivity.userSession.setUserEmail(email);
+                    startActivity(toMain);
+                    getActivity().finish();
 
                 } catch (Exception e) {
                     //if fields are invalid, print to status

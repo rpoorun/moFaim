@@ -27,7 +27,7 @@ public class Restaurant {
     private Long phoneNumber;
 
     @ColumnInfo(name = "RATING")
-    private Double overallRating;
+    private Float overallRating;
 
     @ColumnInfo(name = "LATITUDE")
     private Float latitude;
@@ -42,7 +42,7 @@ public class Restaurant {
     }
 
     @Ignore
-    public Restaurant(String restaurantName, String address, String style ,Long phoneNumber, Double overallRating, Float latitude, Float longitude, String photoName) {
+    public Restaurant(String restaurantName, String address, String style ,Long phoneNumber, Float overallRating, Float latitude, Float longitude, String photoName) {
         this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -85,11 +85,11 @@ public class Restaurant {
         this.phoneNumber = phoneNumber;
     }
 
-    public Double getOverallRating() {
+    public Float getOverallRating() {
         return overallRating;
     }
 
-    public void setOverallRating(Double overallRating) {
+    public void setOverallRating(Float overallRating) {
         this.overallRating = overallRating;
     }
 
@@ -127,7 +127,7 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return "Restaurant{" +
+        return "RestaurantActivity{" +
                 "restaurantId=" + restaurantId +
                 ", restaurantName='" + restaurantName + '\'' +
                 ", address='" + address + '\'' +

@@ -12,7 +12,7 @@
         android:id="@+id/textView_restaurant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
+        android:layout_marginLeft="140dp"
         android:layout_marginTop="10dp"
         android:text="Hello World"
         android:textAlignment="viewStart"
@@ -33,8 +33,8 @@
         android:id="@+id/textView_restaurant_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="40dp"
         android:text="TextView"
         android:textAlignment="viewStart"
         android:textSize="16sp"
@@ -44,10 +44,23 @@
         android:id="@+id/textView_restaurant_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="70dp"
         android:text="TextView"
         android:textAlignment="viewStart" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_restaurant_overallRating"
+        style="@android:style/Widget.Material.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView_restaurant_icon"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="12dp"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5" />
 
 
 </RelativeLayout>

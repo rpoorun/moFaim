@@ -42,6 +42,10 @@ public class Login extends Fragment implements View.OnClickListener {
         mStatus = view.findViewById(R.id.textView_status);
         mToForgotPassword = view.findViewById(R.id.textView_to_forgot_password);
 
+        if(MainActivity.userSession.getUserEmail() != null){
+            mEmail.setText(MainActivity.userSession.getUserEmail());
+        }
+
         buttonToRegister.setOnClickListener(this);
         buttonActionLogin.setOnClickListener(this);
         mToForgotPassword.setOnClickListener(this);
@@ -69,13 +73,10 @@ public class Login extends Fragment implements View.OnClickListener {
                   User user = MainActivity.userService
                             .checkLogin(mEmail.getText().toString(), mPassword.getText().toString());
 
-                  //if checklogin validate executes the generate session
-                    MainActivity.inSession.edit().putString("userId", user.getUserId().toString());
-                    MainActivity.inSession.edit().putBoolean("userLogged", true);
-
-
                     Intent toDashboard = new Intent(getActivity(), Dashboard.class);
-                    startActivity(toDashboard.putExtra("userId", user.getUserId().toString()));
+                    MainActivity.userSession.startSession(user);
+                    startActivity(toDashboard);
+                    getActivity().finish();
 
                 } catch (Exception e) {
                     mStatus.setText(e.getMessage());

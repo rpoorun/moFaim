@@ -23,8 +23,7 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        Intent previous = getIntent();
-        Long userId = Long.valueOf(previous.getStringExtra("userId"));
+        Long userId = MainActivity.userSession.getUserId();
 
         User user = MainActivity.userService.fetchUserById(userId);
         profileName = (TextView) findViewById(R.id.textView_username);
@@ -42,5 +41,14 @@ public class Dashboard extends AppCompatActivity {
             fragmentManager.beginTransaction().add(R.id.fragmentLayout_dashboard, new RestaurantRecyclerView()).commit();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.gc();
+        Intent stay = new Intent(this, Dashboard.class);
+        startActivity(stay);
+        finish();
     }
 }

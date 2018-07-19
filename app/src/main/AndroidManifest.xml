@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivityLayer.Activity.Dashboard" />
+        <activity android:name=".ActivityLayer.Activity.RestaurantActivity"></activity>
     </application>
 
 </manifest>

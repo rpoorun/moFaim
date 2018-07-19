@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Login;
+import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Logout;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.RestaurantService;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.UserService;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.DatabaseUtility;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.UserSession;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     public static UserService userService;
     public static RestaurantService restaurantService;
+    public static UserSession userSession;
     private MoFaimDatabase database;
 
 
@@ -26,26 +29,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //init database connectivity
-        // NOTE: using the database connectivity on the main thread since SQLite is cached on the phone
-        // NOTE: Need to use Async and background thread for other database
-        database = Room.databaseBuilder(getApplicationContext(), MoFaimDatabase.class, "moFaim.db")
-                .allowMainThreadQueries()
-                .build();
+        //init database build & connectivity
+        database = DatabaseUtility.getDatabase(this);
 
         //init session for user logging
-        getSession();
+        userSession = new UserSession(this);
 
         //init service layer with database
         userService = new UserService(database);
         restaurantService = new RestaurantService(database);
 
-        //population database tables
+        //populating database tables
         DatabaseUtility.populateUserTable();
         DatabaseUtility.populateRestaurantTable();
 
-        fragmentManager = getSupportFragmentManager();
 
+        fragmentManager = getSupportFragmentManager();
 
             if (findViewById(R.id.fragmentLayout_main) != null) {
 
@@ -53,10 +52,13 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                fragmentManager.beginTransaction().add(R.id.fragmentLayout_main, new Login()).commit();
-
+                if(userSession.inSession()){
+                    fragmentManager.beginTransaction().add(R.id.fragmentLayout_main, new Logout()).commit();
+                }
+                else {
+                    fragmentManager.beginTransaction().add(R.id.fragmentLayout_main, new Login()).commit();
+                }
             }
-
 
 
     }

@@ -64,10 +64,10 @@ public class ResetPassword extends Fragment implements View.OnClickListener {
                     MainActivity.userService.setNewPassword(user, mPassword.getText().toString(), mConfirmPassword.getText().toString());
                     Toast.makeText(getActivity(),"Password changed successfully", Toast.LENGTH_LONG).show();
 
-                    MainActivity.fragmentManager.beginTransaction().replace(R.id.fragmentLayout_main, new Login())
-
-                            .commit();
-
+                    Intent toMain = new Intent(getContext(), MainActivity.class);
+                    MainActivity.userSession.setUserEmail(user.getEmail());
+                    startActivity(toMain);
+                    getActivity().finish();
                 } catch (Exception e) {
                     mStatus.setText(e.getMessage());
                 } finally {
