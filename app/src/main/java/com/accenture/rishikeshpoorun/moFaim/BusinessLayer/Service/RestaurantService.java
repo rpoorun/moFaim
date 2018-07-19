@@ -1,5 +1,6 @@
 package com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service;
 
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.DatabaseUtility;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.RestaurantDAO;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
@@ -10,8 +11,8 @@ public class RestaurantService {
 
     private RestaurantDAO restaurantDao;
 
-    public RestaurantService(MoFaimDatabase database){
-        this.restaurantDao = database.restaurantDAO();
+    public RestaurantService(){
+        this.restaurantDao = DatabaseUtility.getDatabase().restaurantDAO();
     }
 
     public void addRestaurant(Restaurant restaurant){

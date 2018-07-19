@@ -29,20 +29,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //init database build & connectivity
-        database = DatabaseUtility.getDatabase(this);
+        //getdatabase build & connectivity
+        database = DatabaseUtility.getDatabase();
 
         //init session for user logging
         userSession = new UserSession(this);
 
         //init service layer with database
-        userService = new UserService(database);
-        restaurantService = new RestaurantService(database);
-
-        //populating database tables
-        DatabaseUtility.populateUserTable();
-        DatabaseUtility.populateRestaurantTable();
-
+        userService = new UserService();
+        restaurantService = new RestaurantService();
 
         fragmentManager = getSupportFragmentManager();
 

@@ -8,6 +8,7 @@ import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.EmptyFieldEx
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidEmailException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidPasswordException;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Exception.InvalidUsernameException;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.DatabaseUtility;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.InputValidation;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.PasswordEncryption;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
@@ -22,8 +23,8 @@ public class UserService {
 
     private UserDAO userDao;
 
-    public UserService(MoFaimDatabase database){
-        this.userDao = database.userDAO();
+    public UserService(){
+        this.userDao = DatabaseUtility.getDatabase().userDAO();
 
     }
 

@@ -16,6 +16,7 @@ public class DatabaseUtility {
 
     private static UserService userService;
     private static RestaurantService restaurantService;
+    private static MoFaimDatabase database;
 
     private DatabaseUtility(){
         //do nothing
@@ -25,16 +26,24 @@ public class DatabaseUtility {
     /**
      * Initialize and create the database connectivity
      */
-    public static MoFaimDatabase getDatabase(Context context) {
-         return Room.databaseBuilder(context, MoFaimDatabase.class, "moFaim.db")
+    public static MoFaimDatabase buildDatabase(Context context) {
+         database = Room.databaseBuilder(context, MoFaimDatabase.class, "moFaim.db")
                 .allowMainThreadQueries()
                 .build();
+
+         return database;
     }
+
+
+    public static MoFaimDatabase getDatabase(){
+        return database;
+    }
+
     /**
      * Populate the tables with hardcoded values
      */
     public static void populateUserTable(){
-        userService = MainActivity.userService;
+        userService = new UserService();
 
         try{
             if(userService.getAllUsers().isEmpty()) {
@@ -52,7 +61,7 @@ public class DatabaseUtility {
      * Populate the tables with hardcoded values
      */
     public static void populateRestaurantTable() {
-        restaurantService = MainActivity.restaurantService;
+        restaurantService = new RestaurantService();
 
         try{
             if(restaurantService.getAllRestaurant().isEmpty()) {
