@@ -84,6 +84,6 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
             Intent toRestaurant = new Intent(context, RestaurantActivity.class);
             toRestaurant.putExtra("restaurantId", list.get(getAdapterPosition()).getRestaurantId());
             context.startActivity(toRestaurant);
-        }
+            }
     }
 }

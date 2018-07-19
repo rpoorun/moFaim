@@ -21,24 +21,14 @@ public class SplashScreen extends AppCompatActivity {
     private Boolean isBackgroundComplete;
     private TextView mStatus;
     private ImageView mAnimation;
-    private String[] loadMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         mStatus = findViewById(R.id.textView_splash_status);
-
         mAnimation =  findViewById(R.id.imageView_splash_animation);
-
-        Glide.with(this)
-                .load(R.drawable.splash_animation)
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
-                .into(mAnimation);
-
-        loadMessages = generateMessages();
-
-        DatabaseUtility.buildDatabase(this);
+        DatabaseUtility.buildDatabase(getApplicationContext());
 
         doSplashWelcome();
     }
@@ -48,17 +38,15 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 synchronized (this) {
-
                     try {
-                        int counter = 0;
+
+                        wait(8000);
                         (new loadBackgroundData()).execute();
-                        wait(10000);
+
                         while (true){
-                            mStatus.setText(loadMessages[counter]);
-                            counter ++;
+
                             if (!isBackgroundComplete){
                                 wait(SPLACE_TIME_OUT);
-
                             }
                             else {
                                 mStatus.setText("Happy Eating!!!");
@@ -76,6 +64,7 @@ public class SplashScreen extends AppCompatActivity {
             }
         };
         loadData.start();
+        doAnimation();
     }
 
     private String[] generateMessages(){
@@ -104,6 +93,16 @@ public class SplashScreen extends AppCompatActivity {
             isBackgroundComplete = true;
             return null;
         }
+    }
+
+   private void doAnimation() {
+
+            Glide.with(getApplicationContext())
+                    .load(R.drawable.splash_animation)
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                    .into(mAnimation);
+
+
     }
 
 

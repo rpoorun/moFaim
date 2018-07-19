@@ -66,7 +66,7 @@ public class DatabaseUtility {
         try{
             if(restaurantService.getAllRestaurant().isEmpty()) {
 
-                restaurantService.addRestaurant(new Restaurant("Mine Payo", "Stadium Road, Reduit, Moka", "Street Food", null, (float) 1.0, null, null, "minepayo"));
+                restaurantService.addRestaurant(new Restaurant("Mine Payo", "Stadium Road, Reduit, Moka", "Street Food", 59671909l, 1.0f, null, null, "minepayo"));
                 restaurantService.addRestaurant(new Restaurant("Tamil League", "Tamil Road, Reduit", "Mauritian Cuisine & Snack", null, (float)0.0, null, null, "tamilleague"));
                 restaurantService.addRestaurant(new Restaurant("Mamou", null, "TukShop", null, (float) 3.0, null, null, "mamou"));
                 restaurantService.addRestaurant(new Restaurant("Gloria", "Royal Road, Reduit", "Fast Food", null, (float) 0.5, null, null, "gloria"));

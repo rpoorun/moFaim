@@ -6,4 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".ActivityLayer.Activity.RestaurantActivity">
 
+    <ImageView
+        android:id="@+id/imageView_restaurant_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="155dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mamou_icon" />
+
+    <TextView
+        android:id="@+id/textView_restaurant_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="6dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_restaurant_name" />
+
+    <TextView
+        android:id="@+id/textView_restaurant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="301dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner" />
+
+    <TextView
+        android:id="@+id/textView_restaurant_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="7dp"
+        android:text="TextView"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_restaurant_style" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_restaurant_rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/textView_restaurant_name"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner" />
+
+    <ImageView
+        android:id="@+id/imageView_action_call"
+        android:layout_width="42dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner"
+        app:srcCompat="@drawable/ic_local_phone_24dp" />
+
 </android.support.constraint.ConstraintLayout>
