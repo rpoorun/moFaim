@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.MainActivity;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.DatabaseUtility;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.InputValidation;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
@@ -67,6 +69,14 @@ public class ForgotPassword extends Fragment implements View.OnClickListener {
             case R.id.button_action_send_email:
                 try {
                     //dummy function to be impl
+                    String emailAddr = mEmail.getText().toString();
+                    //validate the emailaddress
+                    InputValidation.validateEmailNotNull(emailAddr);
+                    InputValidation.validateEmailNotExist(emailAddr, DatabaseUtility.getDatabase().userDAO());
+                    InputValidation.validateProperEmailAddress(emailAddr);
+
+
+
                     Toast.makeText(getActivity(),"Password Reset Email Sent", Toast.LENGTH_SHORT).show();
 
                 }catch (Exception e){
