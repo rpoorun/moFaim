@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.MainActivity;
-import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
+import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.RestaurantActivity;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Menu;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
 import java.util.List;
@@ -18,13 +19,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RestaurantRecyclerView extends Fragment {
-    private RecyclerView recyclerView;
+public class MenuRecyclerView extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
-    private List<Restaurant> list;
-    private static RestaurantRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
+    private List<Menu> list;
+    private MenuRecyclerViewAdaper adapter;
+    private Long restaurantId;
 
-    public RestaurantRecyclerView() {
+
+    public MenuRecyclerView() {
         // Required empty public constructor
     }
 
@@ -32,21 +35,22 @@ public class RestaurantRecyclerView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_restaurant_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_recycler_view, container, false);
+
+        restaurantId = RestaurantActivity.getRestaurantId();
+
 
         //init the view
-        recyclerView = view.findViewById(R.id.restaurant_recycler_view);
+        recyclerView = view.findViewById(R.id.menu_recycler_view);
         //set a layout manager to arrangement the viewHolder or components
-        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         //assign the LayoutManager to the recyclerView
         recyclerView.setLayoutManager(layoutManager);
         //populate the list from database
-        list = MainActivity.restaurantService.getAllRestaurant();
+        list = MainActivity.menuService.getAllMenuByRestaurantId(restaurantId);
         //init the adapter to convert the list to viewHolder or component
-        adapter = new RestaurantRecyclerViewAdapter(list, getContext());
+        adapter = new MenuRecyclerViewAdaper(getContext(), list);
         //standardize the sizes
         recyclerView.setHasFixedSize(true);
         //parse the adapter to populate each viewHolder
@@ -54,12 +58,6 @@ public class RestaurantRecyclerView extends Fragment {
 
 
         return view;
-    }
-
-
-    public static void updateRestaurantList(List<Restaurant> list){
-        adapter.updateRestaurantList(list);
-
     }
 
 }

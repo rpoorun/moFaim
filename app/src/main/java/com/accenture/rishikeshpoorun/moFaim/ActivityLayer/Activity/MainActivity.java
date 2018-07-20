@@ -9,18 +9,23 @@ import android.os.Bundle;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Login;
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Logout;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.MenuService;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.RatingService;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.RestaurantService;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Service.UserService;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.DatabaseUtility;
 import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.UserSession;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Rating;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
 public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     public static UserService userService;
     public static RestaurantService restaurantService;
+    public static RatingService ratingService;
     public static UserSession userSession;
+    public static MenuService menuService;
     private MoFaimDatabase database;
 
 
@@ -38,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         //init service layer with database
         userService = new UserService();
         restaurantService = new RestaurantService();
+        ratingService = new RatingService();
+        menuService = new MenuService();
 
         fragmentManager = getSupportFragmentManager();
 

@@ -5,22 +5,12 @@
         <item
             android:id="@+id/menu_to_logout"
             android:title="Logout"
-            app:showAsAction="never"
             />
 
         <item
-            android:title="Search"
-            android:id="@+id/menu_action_search"
-            app:showAsAction="ifRoom|collapseActionView"
-            android:icon="@drawable/ic_search_black_24dp"
-            app:actionViewClass="android.support.v7.widget.SearchView"/>
-
-        <item
             android:title="Share"
-            android:id="@+id/menu_action_share"
+            android:id="@+id/menu_action_share_restaurant"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_share_black_24dp"/>
-
-
 
 </menu>

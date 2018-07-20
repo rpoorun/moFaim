@@ -51,6 +51,7 @@ public class Logout extends Fragment implements View.OnClickListener {
             case R.id.button_action_continue:
                 Intent toDashboard = new Intent(getContext(), Dashboard.class);
                 startActivity(toDashboard);
+                getActivity().finish();
                 break;
 
             case R.id.button_action_logout:

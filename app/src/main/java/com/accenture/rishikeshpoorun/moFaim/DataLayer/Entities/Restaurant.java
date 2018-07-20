@@ -4,8 +4,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Relation;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Entity(tableName = "RESTAURANT_TABLE")
 public class Restaurant {
@@ -42,11 +44,10 @@ public class Restaurant {
     }
 
     @Ignore
-    public Restaurant(String restaurantName, String address, String style ,Long phoneNumber, Float overallRating, Float latitude, Float longitude, String photoName) {
+    public Restaurant(String restaurantName, String address, String style ,Long phoneNumber, Float latitude, Float longitude, String photoName) {
         this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.overallRating = overallRating;
         this.latitude = latitude;
         this.longitude = longitude;
         this.photoName = photoName;
@@ -124,6 +125,7 @@ public class Restaurant {
     public void setStyle(String style) {
         this.style = style;
     }
+
 
     @Override
     public String toString() {

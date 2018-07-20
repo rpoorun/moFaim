@@ -3,13 +3,14 @@ package com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,13 +18,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.RecyclerView.RestaurantRecyclerView;
+import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.RecyclerView.RestaurantRecyclerViewAdapter;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.UserSession;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
-public class Dashboard extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTextListener{
     private TextView profileName;
     private FragmentManager fragmentManager;
     private static final int REQUEST_INTERNET = 1;
+    private MenuItem searchAction;
+    private SearchView searchView;
+    private List<Restaurant> allRestaurantList;
+    private static final int TIME_DELAY_EXIT = 500;
+    private static int back_pressed;
 
 
     @Override
@@ -31,13 +43,10 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-
-        Long userId = MainActivity.userSession.getUserId();
-
-        User user = MainActivity.userService.fetchUserById(userId);
+        User user = MainActivity.userService.fetchUserById(MainActivity.userSession.getUserId());
         profileName = (TextView) findViewById(R.id.textView_username);
         profileName.setText(user.toString());
-
+        back_pressed =0;
 
         fragmentManager = getSupportFragmentManager();
 
@@ -62,6 +71,29 @@ public class Dashboard extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.toolbar_dashboard_menu, menu);
+
+        /*MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+
+                return true;
+            }
+
+            // when the search is returned to normal, the all restaurant list is parsed to the reset
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                RestaurantRecyclerView.updateRestaurantList(allRestaurantList);
+                return true;
+            }
+        };*/
+
+        searchAction = menu.findItem(R.id.menu_action_search);
+
+        //searchAction.setOnActionExpandListener(onActionExpandListener);
+
+        MenuItem menuItem = menu.findItem(R.id.menu_action_search);
+        searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -116,12 +148,68 @@ public class Dashboard extends AppCompatActivity {
         }
     }
 
+    /**
+     * handle user action when pressing the back button
+     */
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        System.gc();
-        Intent stay = new Intent(this, Dashboard.class);
-        startActivity(stay);
-        finish();
+        try {
+            if (back_pressed > 0) {
+                back_pressed = 0;
+                super.onBackPressed();
+                finish();
+            } else {
+
+                System.gc();
+                Toast.makeText(this,"Press BACK again to exit",Toast.LENGTH_SHORT).show();
+                back_pressed++;
+
+            }
+        }catch (Exception e){
+
+        }
+
+    }
+
+
+    /**
+     * Method to get the text from the search bar
+     * @return
+     */
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    /**
+     * Method to update the text if user changes the search query from the search bar
+     * @return
+     */
+    @Override
+    public boolean onQueryTextChange(String newQuery) {
+
+        //Check the onScreen list instead of querying the database
+        allRestaurantList = RestaurantRecyclerViewAdapter.getList();
+        List<Restaurant> newList = new ArrayList<>();
+        for (Restaurant r: allRestaurantList){
+            //check if restaurant name matches the search query
+            if(r.getRestaurantName() != null && r.getRestaurantName().toLowerCase().contains(newQuery)){
+                //check if restaurant is not in the new list, then add
+                if(!newList.contains(r)){
+                    newList.add(r);
+                }
+            }
+            //check if restaurant location/address matches the search query
+            if (r.getAddress() != null && r.getAddress().toLowerCase().contains(newQuery)){
+                //check if restaurant if not in the new list, then add
+                if(!newList.contains(r)){
+                    newList.add(r);
+                }
+
+            }
+        }
+
+        RestaurantRecyclerView.updateRestaurantList(newList);
+        return true;
     }
 }

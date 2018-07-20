@@ -18,9 +18,10 @@ public class SplashScreen extends AppCompatActivity {
 
 
     private final int SPLACE_TIME_OUT = 500;
-    private Boolean isBackgroundComplete;
+    private Boolean isBackgroundComplete = false;
     private TextView mStatus;
     private ImageView mAnimation;
+    private String[] waitMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         mStatus = findViewById(R.id.textView_splash_status);
         mAnimation =  findViewById(R.id.imageView_splash_animation);
+        waitMsg =generateMessages();
         DatabaseUtility.buildDatabase(getApplicationContext());
 
         doSplashWelcome();
@@ -39,14 +41,16 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 synchronized (this) {
                     try {
-
-                        wait(8000);
+                        //wait(8000);
+                        int counter = 0;
                         (new loadBackgroundData()).execute();
 
                         while (true){
 
                             if (!isBackgroundComplete){
+                                mStatus.setText(waitMsg[counter]);
                                 wait(SPLACE_TIME_OUT);
+                                counter++;
                             }
                             else {
                                 mStatus.setText("Happy Eating!!!");
@@ -88,6 +92,8 @@ public class SplashScreen extends AppCompatActivity {
             //populating database tables
             DatabaseUtility.populateUserTable();
             DatabaseUtility.populateRestaurantTable();
+            DatabaseUtility.populateMenuTable();
+            DatabaseUtility.populateRatingTable();
 
             //after background task is completed, set flag to completed
             isBackgroundComplete = true;

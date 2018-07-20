@@ -4,6 +4,9 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Relation;
+
+import java.util.List;
 
 
 @Entity(tableName = "USER_TABLE")
@@ -24,7 +27,6 @@ public class User {
 
     @ColumnInfo(name = "PASSWORD")
     private String password;
-
 
     public User() {
     }
@@ -67,6 +69,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     @Override
     public String toString() {

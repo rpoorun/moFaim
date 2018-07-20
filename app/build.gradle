@@ -51,4 +51,8 @@ dependencies {
 
     //Gif View handler
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.2.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
+
+    //Card view handler
+    implementation 'com.android.support:cardview-v7:28.0.0-alpha3'
 }

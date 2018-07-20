@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "32c5e6abdf504309d493902b7f7a47f8",
+    "identityHash": "5261b888c3d2a48d702da54f9e72d3ad",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -109,11 +109,93 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "RATING_TABLE",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`RATING_ID` INTEGER PRIMARY KEY AUTOINCREMENT, `USER_ID` INTEGER, `RESTAURANT_ID` INTEGER, `RATINGS` REAL)",
+        "fields": [
+          {
+            "fieldPath": "ratingId",
+            "columnName": "RATING_ID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "USER_ID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "restaurantId",
+            "columnName": "RESTAURANT_ID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rating",
+            "columnName": "RATINGS",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "RATING_ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "MENU_TABLE",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`MENU_ID` INTEGER PRIMARY KEY AUTOINCREMENT, `MENU_NAME` TEXT, `MENU_PRICE` REAL, `RESTAURANT_ID` INTEGER, `PHOTO_NAME` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "menuId",
+            "columnName": "MENU_ID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "menuName",
+            "columnName": "MENU_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "menuPrice",
+            "columnName": "MENU_PRICE",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "restaurantId",
+            "columnName": "RESTAURANT_ID",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "photoName",
+            "columnName": "PHOTO_NAME",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "MENU_ID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"32c5e6abdf504309d493902b7f7a47f8\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5261b888c3d2a48d702da54f9e72d3ad\")"
     ]
   }
 }

@@ -15,11 +15,12 @@ import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.RestaurantAct
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<RestaurantRecyclerViewAdapter.RestaurantViewHolder>{
 
-    private List<Restaurant> list;
+    private static List<Restaurant> list;
     private Context context;
 
     public RestaurantRecyclerViewAdapter(List<Restaurant> list, Context context){
@@ -31,7 +32,7 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.component_restaurant_recycler_view, viewGroup, false);
-        RestaurantViewHolder restaurantViewHolder = new RestaurantViewHolder(itemView, context, list);
+        RestaurantViewHolder restaurantViewHolder = new RestaurantViewHolder(itemView, context);
         return restaurantViewHolder;
     }
 
@@ -44,7 +45,7 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         viewHolder.restaurantStyle.setText(restaurant.getStyle());
         viewHolder.restaurantAddress.setText(restaurant.getAddress());
         if(imageId == null){
-            imageId = context.getResources().getIdentifier("minepayo_icon", null, null);
+            imageId = context.getResources().getIdentifier("minepayo_icon", "drawable", context.getPackageName());
         }
         viewHolder.restaurantIcon.setImageResource(imageId);
         viewHolder.restaurantRating.setRating(restaurant.getOverallRating());
@@ -56,6 +57,19 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         return list.size();
     }
 
+    public static List<Restaurant> getList(){return list;}
+
+
+    /**
+     * This method re init the list to be displayed in the recyclerview
+     * List fetch from toolbar search event
+     * @param newlist
+     */
+    public void updateRestaurantList(List<Restaurant> newlist){
+        list = new ArrayList<>();
+        list.addAll(newlist);
+        notifyDataSetChanged();
+    }
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView restaurantIcon;
@@ -63,9 +77,9 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         TextView restaurantAddress;
         TextView restaurantStyle;
         RatingBar restaurantRating;
-        List<Restaurant> list;
+
         Context context;
-        public RestaurantViewHolder(View itemView, Context context, List<Restaurant> list) {
+        public RestaurantViewHolder(View itemView, Context context) {
             super(itemView);
             restaurantName = itemView.findViewById(R.id.textView_restaurant_name);
             restaurantAddress = itemView.findViewById(R.id.textView_restaurant_address);
@@ -74,7 +88,7 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
             restaurantRating = itemView.findViewById(R.id.ratingBar_restaurant_overallRating);
 
             this.context = context;
-            this.list = list;
+
 
             itemView.setOnClickListener(this);
         }
