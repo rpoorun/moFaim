@@ -74,6 +74,16 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner"
         app:srcCompat="@drawable/ic_local_phone_24dp" />
 
+    <ImageView
+        android:id="@+id/imageView_action_load_map"
+        android:layout_width="42dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner"
+        app:srcCompat="@drawable/ic_location_on_black_24dp" />
+
     <TextView
         android:id="@+id/textView_rate_it_msg"
         android:layout_width="wrap_content"
@@ -87,16 +97,17 @@
 
     <RatingBar
         android:id="@+id/ratingBar_rate_it"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        style="@android:style/Widget.Material.RatingBar"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="52dp"
+        android:layout_marginTop="92dp"
+        android:clickable="true"
+        android:isIndicator="false"
         android:numStars="5"
-        android:rating="4"
         android:stepSize=".5"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/textView_rate_it_msg"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner" />
 
     <FrameLayout

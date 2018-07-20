@@ -72,21 +72,6 @@ public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTe
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.toolbar_dashboard_menu, menu);
 
-        /*MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem menuItem) {
-
-                return true;
-            }
-
-            // when the search is returned to normal, the all restaurant list is parsed to the reset
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                RestaurantRecyclerView.updateRestaurantList(allRestaurantList);
-                return true;
-            }
-        };*/
-
         searchAction = menu.findItem(R.id.menu_action_search);
 
         //searchAction.setOnActionExpandListener(onActionExpandListener);

@@ -51,7 +51,8 @@ public class RatingService {
             ratingDao.updateRating(r);
         }
         else {
-            ratingDao.insertRating(r);
+
+            ratingDao.insertRating(new Rating(userId,restaurantId,newRating));
         }
     }
 

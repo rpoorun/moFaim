@@ -24,6 +24,8 @@ import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.RecyclerView.Restauran
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
+import java.util.Locale;
+
 public class RestaurantActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CALL = 1;
     private static final int REQUEST_INTERNET = 1;
@@ -35,6 +37,7 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
     private RatingBar restaurantOverallRating;
     private ImageView restaurantBanner;
     private ImageView iconActionCall;
+    private ImageView iconActionMap;
     private TextView rateItMsg;
     private RatingBar ratingBar;
     private Float userRating;
@@ -50,58 +53,32 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
 
-        //init activity attributes
-        restaurantName = findViewById(R.id.textView_restaurant_name);
-        restaurantAddress = findViewById(R.id.textView_restaurant_address);
-        restaurantStyle = findViewById(R.id.textView_restaurant_style);
-        restaurantBanner = findViewById(R.id.imageView_restaurant_banner);
-        restaurantOverallRating = findViewById(R.id.ratingBar_restaurant_rating);
-        iconActionCall = findViewById(R.id.imageView_action_call);
-        ratingBar = findViewById(R.id.ratingBar_rate_it);
-        rateItMsg = findViewById(R.id.textView_rate_it_msg);
-        userRating = MainActivity.ratingService.getUserRating(MainActivity.userSession.getUserId(), restaurantId);
+        //init the views on this activity
+        initViewAttributes();
 
         //get restaurant object using id from previous activity
         restaurantId = getIntent().getLongExtra("restaurantId",0);
         restaurant = MainActivity.restaurantService.getRestaurantById(restaurantId);
 
-        //fetch resource ID
-        Integer imageId = this.getResources().getIdentifier(restaurant.getPhotoName()+"_icon", "drawable", this.getPackageName());
+        //populate the different views on this activity
+        populateViews();
 
-        restaurantName.setText(restaurant.getRestaurantName());
-        restaurantStyle.setText(restaurant.getStyle());
-        restaurantAddress.setText(restaurant.getAddress());
-        restaurantOverallRating.setRating((restaurant.getOverallRating() == null)? 0.0f:restaurant.getOverallRating());
-        restaurantBanner.setImageResource(imageId);
+        //Handles the fragment recycler view
+        menuRecylerViewManager(savedInstanceState);
 
-        if(userRating != 0.0f){
-            rateItMsg.setText("Your Rating:");
-            ratingBar.setRating(3.0f);
-        }
-
-        if(restaurant.getPhoneNumber() == null){
-            iconActionCall.setVisibility(View.GONE);
-        }
-        else {
-            iconActionCall.setVisibility(View.VISIBLE);
-        }
 
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                if(userRating == 0.0f) {
-                    MainActivity.ratingService.addRating(MainActivity.userSession.getUserId(), restaurantId, userRating);
-                }
-                else {
-                    MainActivity.ratingService.updateRating(MainActivity.userSession.getUserId(),restaurantId, userRating);
-                }
+
+                MainActivity.ratingService.updateRating(MainActivity.userSession.getUserId(),restaurantId, v);
 
                 Float newRatings = MainActivity.ratingService.getOverallRestaurantRating(restaurantId);
 
                 restaurantOverallRating.setRating(newRatings);
                 if(userRating >0.0f){
-                    rateItMsg.setText("Your Rating:");
+                    rateItMsg.setText("Yours:");
                 }
                 else {
                     rateItMsg.setText("Rate it!");
@@ -110,21 +87,7 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
         });
 
         iconActionCall.setOnClickListener(this);
-//        ratingBar.setOnClickListener(this);
-
-        fragmentManager = getSupportFragmentManager();
-
-        if(findViewById(R.id.fragmentLayout_menu) != null){
-
-
-            if(savedInstanceState != null){
-                return;
-            }
-
-            fragmentManager.beginTransaction().add(R.id.fragmentLayout_menu, new MenuRecyclerView()).commit();
-        }
-
-
+        iconActionMap.setOnClickListener(this);
 
     }
 
@@ -138,6 +101,11 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.ratingBar_rate_it:
+                break;
+
+            case R.id.imageView_action_load_map:
+                openLocationOnMap();
+                break;
 
         }
     }
@@ -220,6 +188,14 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private void openLocationOnMap(){
+        //format the URI to map location
+        String uri = String.format("geo:%f,%f?q=%s", restaurant.getLatitude(), restaurant.getLongitude(), restaurant.getRestaurantName());
+        Intent openMap = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        openMap.setPackage("com.google.android.apps.maps");
+        startActivity(openMap);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -228,6 +204,69 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
         startActivity(stay);
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
         finish();
+
+
+
+    }
+
+
+    private void initViewAttributes(){
+        //init activity attributes
+        restaurantName = findViewById(R.id.textView_restaurant_name);
+        restaurantAddress = findViewById(R.id.textView_restaurant_address);
+        restaurantStyle = findViewById(R.id.textView_restaurant_style);
+        restaurantBanner = findViewById(R.id.imageView_restaurant_banner);
+        restaurantOverallRating = findViewById(R.id.ratingBar_restaurant_rating);
+        iconActionCall = findViewById(R.id.imageView_action_call);
+        iconActionMap = findViewById(R.id.imageView_action_load_map);
+        ratingBar = findViewById(R.id.ratingBar_rate_it);
+        rateItMsg = findViewById(R.id.textView_rate_it_msg);
+    }
+
+
+    private void populateViews(){
+        //fetch resource ID
+        Integer imageId = this.getResources().getIdentifier(restaurant.getPhotoName()+"_icon", "drawable", this.getPackageName());
+        userRating = MainActivity.ratingService.getUserRating(MainActivity.userSession.getUserId(), restaurantId);
+        restaurantName.setText(restaurant.getRestaurantName());
+        restaurantStyle.setText(restaurant.getStyle());
+        restaurantAddress.setText(restaurant.getAddress());
+        restaurantOverallRating.setRating((restaurant.getOverallRating() == null)? 0.0f:restaurant.getOverallRating());
+        restaurantBanner.setImageResource(imageId);
+
+        if(userRating != 0.0f){
+            rateItMsg.setText("Yours:");
+            ratingBar.setRating(userRating);
+        }
+
+        if(restaurant.getPhoneNumber() == null){
+            iconActionCall.setVisibility(View.GONE);
+        }
+        else {
+            iconActionCall.setVisibility(View.VISIBLE);
+        }
+
+        if(restaurant.getLatitude() == null && restaurant.getLongitude() == null){
+            iconActionMap.setVisibility(View.GONE);
+        }
+        else {
+            iconActionMap.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    private void menuRecylerViewManager(Bundle savedInstanceState) {
+        fragmentManager = getSupportFragmentManager();
+
+        if(findViewById(R.id.fragmentLayout_menu) != null){
+
+
+            if(savedInstanceState != null){
+                return;
+            }
+
+            fragmentManager.beginTransaction().add(R.id.fragmentLayout_menu, new MenuRecyclerView()).commit();
+        }
 
 
 
