@@ -12,8 +12,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Activity.RestaurantActivity;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.GlideApp;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
 import com.accenture.rishikeshpoorun.moFaim.R;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +46,7 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         viewHolder.restaurantName.setText(restaurant.getRestaurantName());
         viewHolder.restaurantStyle.setText(restaurant.getStyle());
         viewHolder.restaurantAddress.setText(restaurant.getAddress());
-        if(imageId == null){
-            imageId = context.getResources().getIdentifier("minepayo_icon", "drawable", context.getPackageName());
-        }
-        viewHolder.restaurantIcon.setImageResource(imageId);
+        GlideApp.with(context).load(imageId).into(viewHolder.restaurantIcon);
         viewHolder.restaurantRating.setRating(restaurant.getOverallRating());
 
     }

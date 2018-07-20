@@ -59,7 +59,9 @@ public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+        if(MainActivity.userSession.getUserId() == null){
+            startActivity(new Intent(this, MainActivity.class));
+        }
         User user = MainActivity.userService.fetchUserById(MainActivity.userSession.getUserId());
         profileName = (TextView) findViewById(R.id.textView_username);
         userLocationMsg = findViewById(R.id.textView_known_user_location);
@@ -76,12 +78,14 @@ public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTe
         //update fragment if location flag is set to known
         if(flagKnowLocation){
             getUserLocation();
+
         }
 
         if (findViewById(R.id.fragmentLayout_dashboard) != null) {
 
 
             if (savedInstanceState != null) {
+
                 return;
             }
 
@@ -336,7 +340,9 @@ public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTe
                         @Override
                         public void onProviderDisabled(String s) {
                             //go to setting to enable gps service
-                            getApplicationContext().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            //getApplicationContext().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            Intent gpsOpt = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(gpsOpt);
 
                                 }
                  };

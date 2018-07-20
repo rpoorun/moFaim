@@ -19,5 +19,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="Designed By Geek09 v2.1"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="6sp"
+            android:textStyle="italic" />
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>

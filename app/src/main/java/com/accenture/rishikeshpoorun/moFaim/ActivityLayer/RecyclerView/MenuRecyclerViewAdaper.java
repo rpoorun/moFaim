@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.GlideApp;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Menu;
 import com.accenture.rishikeshpoorun.moFaim.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
 
 import java.util.List;
 
@@ -41,7 +44,9 @@ public class MenuRecyclerViewAdaper extends RecyclerView.Adapter<MenuRecyclerVie
         if(imageId == null){
             imageId = context.getResources().getIdentifier("minepayo_icon", null, null);
         }
-        menuViewHolder.menuIcon.setImageResource(imageId);
+
+        GlideApp.with(context).load(imageId).override(160,160).into(menuViewHolder.menuIcon);
+        //menuViewHolder.menuIcon.setImageResource(imageId);
         menuViewHolder.menuName.setText(menu.getMenuName());
         menuViewHolder.menuPrice.setText("Rs."+ menu.getMenuPrice().toString());
 

@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.concurrent.ExecutionException;
+
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -41,7 +43,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 synchronized (this) {
                     try {
-                        //wait(8000);
+                        wait(2000);
                         int counter = 0;
                         (new loadBackgroundData()).execute();
 
@@ -54,7 +56,7 @@ public class SplashScreen extends AppCompatActivity {
                             }
                             else {
                                 mStatus.setText("Happy Eating!!!");
-                                wait(3500);
+                                wait(1500);
                                 break;
                             }
                         }
@@ -89,12 +91,11 @@ public class SplashScreen extends AppCompatActivity {
         @Override
         protected String doInBackground(Context... contexts) {
 
-            //populating database tables
-            DatabaseUtility.populateUserTable();
-            DatabaseUtility.populateRestaurantTable();
-            DatabaseUtility.populateMenuTable();
-            DatabaseUtility.populateRatingTable();
-
+                //populating database tables
+                DatabaseUtility.populateUserTable();
+                DatabaseUtility.populateRestaurantTable();
+                DatabaseUtility.populateMenuTable();
+                DatabaseUtility.populateRatingTable();
             //after background task is completed, set flag to completed
             isBackgroundComplete = true;
             return null;

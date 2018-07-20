@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.RecyclerView.MenuRecyclerView;
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.RecyclerView.RestaurantRecyclerView;
+import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.GlideApp;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
 import com.accenture.rishikeshpoorun.moFaim.R;
 
@@ -226,13 +227,15 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
 
     private void populateViews(){
         //fetch resource ID
-        Integer imageId = this.getResources().getIdentifier(restaurant.getPhotoName()+"_icon", "drawable", this.getPackageName());
+        Integer imageId = this.getResources().getIdentifier(restaurant.getPhotoName()+"_banner", "drawable", this.getPackageName());
         userRating = MainActivity.ratingService.getUserRating(MainActivity.userSession.getUserId(), restaurantId);
         restaurantName.setText(restaurant.getRestaurantName());
         restaurantStyle.setText(restaurant.getStyle());
         restaurantAddress.setText(restaurant.getAddress());
         restaurantOverallRating.setRating((restaurant.getOverallRating() == null)? 0.0f:restaurant.getOverallRating());
-        restaurantBanner.setImageResource(imageId);
+        GlideApp.with(this)
+                .load(imageId)
+                .into(restaurantBanner);
 
         if(userRating != 0.0f){
             rateItMsg.setText("Yours:");
