@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Login;
 import com.accenture.rishikeshpoorun.moFaim.ActivityLayer.Fragment.Logout;
@@ -27,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
     public static UserSession userSession;
     public static MenuService menuService;
     private MoFaimDatabase database;
+    private static int back_pressed;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        back_pressed = 0;
 
         //getdatabase build & connectivity
         database = DatabaseUtility.getDatabase();
@@ -69,10 +72,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        System.gc();
-        Intent stay = new Intent(this, MainActivity.class);
-        startActivity(stay);
-        finish();
+        try {
+            if (back_pressed > 0) {
+                back_pressed = 0;
+                super.onBackPressed();
+                finish();
+            } else {
+
+                System.gc();
+                Toast.makeText(this,"Double press BACK again to exit",Toast.LENGTH_SHORT).show();
+                back_pressed++;
+
+            }
+        }catch (Exception e){
+
+        }
     }
 }

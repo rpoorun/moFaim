@@ -79,6 +79,7 @@ public class DatabaseUtility {
                 restaurantService.addRestaurant(new Restaurant("Dhol puri", "Royal Road, Reduit", "Snack", null,  null, null, "dholpuri"));
                 restaurantService.addRestaurant(new Restaurant("Rodrigues", null, "Mixed", null,  null, null, "rodrigues"));
                 restaurantService.addRestaurant(new Restaurant("Ken", null, "Mauritian Cuisine", null,  null, null, "ken"));
+                restaurantService.addRestaurant(new Restaurant("Boulette Soubi", "Mahebourg", "Snack", null,  null, null, "ken"));
             }
 
         }catch (Exception e){
