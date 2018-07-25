@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1094529314048",
+    "firebase_url": "https://mofaim-app.firebaseio.com",
+    "project_id": "mofaim-app",
+    "storage_bucket": "mofaim-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094529314048:android:7174aadba4ea53d6",
+        "android_client_info": {
+          "package_name": "com.accenture.rishikeshpoorun.moFaim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094529314048-gn6v1tpknm4t6dlsrdsgr2u2jtupdg0t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.accenture.rishikeshpoorun.moFaim",
+            "certificate_hash": "455894a4f2524feb5e7690e6b5857f423340d34d"
+          }
+        },
+        {
+          "client_id": "1094529314048-hb71lq74no0m7uh5sr0hemiostee69k6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYaZ1sE43ZumxNmuqLR0LCVWCedxE3KUU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094529314048-hb71lq74no0m7uh5sr0hemiostee69k6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
