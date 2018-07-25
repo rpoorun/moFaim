@@ -27,7 +27,7 @@
             android:text="Designed By Geek09 v2.1"
             android:textAlignment="center"
             android:textColor="@android:color/darker_gray"
-            android:textSize="6sp"
+            android:textSize="8sp"
             android:textStyle="italic" />
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>

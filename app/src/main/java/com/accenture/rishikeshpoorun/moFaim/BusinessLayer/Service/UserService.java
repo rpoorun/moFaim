@@ -14,6 +14,8 @@ import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.PasswordEncryp
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Database.MoFaimDatabase;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.DAO.UserDAO;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.Repository.ReviewRepository;
+import com.accenture.rishikeshpoorun.moFaim.DataLayer.Repository.UserRepository;
 
 import java.util.List;
 
@@ -23,9 +25,9 @@ public class UserService {
 
     private UserDAO userDao;
 
+
     public UserService(){
         this.userDao = DatabaseUtility.getDatabase().userDAO();
-
     }
 
     /**

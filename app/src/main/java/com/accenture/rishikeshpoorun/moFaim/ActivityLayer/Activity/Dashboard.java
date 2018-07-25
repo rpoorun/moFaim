@@ -35,6 +35,8 @@ import com.accenture.rishikeshpoorun.moFaim.BusinessLayer.Utility.UserSession;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.Restaurant;
 import com.accenture.rishikeshpoorun.moFaim.DataLayer.Entities.User;
 import com.accenture.rishikeshpoorun.moFaim.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,7 @@ public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTe
         profileName.setText("Hello " + user.getUserName());
         allRestaurantList = MainActivity.restaurantService.getAllRestaurant();
         back_pressed = 0;
+
 
         switchLocation.setChecked(flagKnowLocation);
         switchLocation.setOnCheckedChangeListener(this);
