@@ -48,7 +48,7 @@ public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTe
     private MenuItem searchAction;
     private SearchView searchView;
     private List<Restaurant> allRestaurantList;
-    private static Long TIME_DELAY_EXIT;
+    private static final int TIME_DELAY_EXIT = 500;
     private static int back_pressed;
     private Switch switchLocation;
     private static boolean flagKnowLocation;
@@ -173,6 +173,29 @@ public class Dashboard extends AppCompatActivity implements SearchView.OnQueryTe
                 Toast.makeText(this, "PERMISSION DENIED", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    /**
+     * handle user action when pressing the back button
+     */
+    @Override
+    public void onBackPressed() {
+        try {
+            if (back_pressed > 0) {
+                back_pressed = 0;
+                super.onBackPressed();
+                finish();
+            } else {
+
+                System.gc();
+                Toast.makeText(this, "Double press BACK again to exit", Toast.LENGTH_SHORT).show();
+                back_pressed++;
+
+            }
+        } catch (Exception e) {
+
+        }
+
     }
 
 

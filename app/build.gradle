@@ -6,8 +6,8 @@ android {
         applicationId "com.accenture.rishikeshpoorun.moFaim"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 5
-        versionName "2.3"
+        versionCode 3
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {

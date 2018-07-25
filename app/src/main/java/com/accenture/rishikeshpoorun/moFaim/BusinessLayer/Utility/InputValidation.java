@@ -87,14 +87,4 @@ public class InputValidation {
         }
     }
 
-    public static boolean validateEmailNotExist(String email, UserDAO userDao) throws EmailConflictException {
-       User u = userDao.getUserByEmail(email);
-       if(u == null){
-           throw new EmailConflictException("This Email Address does not match our records!");
-       }
-       else {
-           return true;
-       }
-    }
-
 }
