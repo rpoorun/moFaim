@@ -37,6 +37,7 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
     private TextView restaurantStyle;
     private RatingBar restaurantOverallRating;
     private ImageView restaurantBanner;
+    private ImageView iconActionReview;
     private ImageView iconActionCall;
     private ImageView iconActionMap;
     private TextView rateItMsg;
@@ -89,6 +90,7 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
 
         iconActionCall.setOnClickListener(this);
         iconActionMap.setOnClickListener(this);
+        iconActionReview.setOnClickListener(this);
 
     }
 
@@ -106,6 +108,10 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.imageView_action_load_map:
                 openLocationOnMap();
+                break;
+
+            case R.id.imageView_action_review:
+                startActivity(new Intent(this,ReviewActivity.class).putExtra("RestaurantId",restaurantId));
                 break;
 
         }
@@ -222,6 +228,7 @@ public class RestaurantActivity extends AppCompatActivity implements View.OnClic
         iconActionMap = findViewById(R.id.imageView_action_load_map);
         ratingBar = findViewById(R.id.ratingBar_rate_it);
         rateItMsg = findViewById(R.id.textView_rate_it_msg);
+        iconActionReview = findViewById(R.id.imageView_action_review);
     }
 
 

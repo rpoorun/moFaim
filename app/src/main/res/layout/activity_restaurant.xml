@@ -66,20 +66,30 @@
 
     <ImageView
         android:id="@+id/imageView_action_call"
-        android:layout_width="42dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginTop="45dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="32sp"
+        android:layout_height="34sp"
+        android:layout_marginEnd="10sp"
+        android:layout_marginTop="45sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_action_load_map"
         app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner"
         app:srcCompat="@drawable/ic_local_phone_24dp" />
 
     <ImageView
+        android:id="@+id/imageView_action_review"
+        android:layout_width="32sp"
+        android:layout_height="34sp"
+        android:layout_marginEnd="10sp"
+        android:layout_marginTop="45sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_action_call"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner"
+        app:srcCompat="@drawable/ic_chat_black_24dp" />
+
+    <ImageView
         android:id="@+id/imageView_action_load_map"
-        android:layout_width="42dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="45dp"
+        android:layout_width="32sp"
+        android:layout_height="34sp"
+        android:layout_marginEnd="10sp"
+        android:layout_marginTop="45sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_restaurant_banner"
         app:srcCompat="@drawable/ic_location_on_black_24dp" />

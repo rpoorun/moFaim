@@ -19,6 +19,7 @@ public class UserSession {
     private final String SESSION_USER_NAME = "userName";
     private final String SESSION_USER_EMAIL = "email";
     private static Long userId;
+    private static String userName;
 
 
 
@@ -37,6 +38,7 @@ public class UserSession {
         //check if already in session
         if(inSession()){
             userId = getUserId();
+            userName = getUserName();
             return;
         }
         else {
@@ -46,6 +48,7 @@ public class UserSession {
             editor.putString(SESSION_USER_NAME, user.getUserName());
             editor.putString(SESSION_USER_EMAIL, user.getEmail());
             userId = user.getUserId();
+            userName = user.getUserName();
             editor.commit();
         }
     }
@@ -77,23 +80,18 @@ public class UserSession {
         return sharedPreferences.getBoolean(SESSION_STATUS,false);
     }
 
-    public static Long getSessionId(){
-        return userId;
-    }
+//    public static Long getSessionId(){
+//        return userId;
+//    }
+//
+//    public static String getUserName() { return  userName; }
 
     public Long getUserId(){
-        if (inSession()){
-            Long userId = sharedPreferences.getLong(SESSION_USER_ID,0);
-            return userId;
-        }
-        return null;
+            return sharedPreferences.getLong(SESSION_USER_ID,0);
     }
 
     public String getUserName(){
-        if (inSession()){
-            return sharedPreferences.getString(SESSION_USER_NAME,"");
-        }
-        return null;
+        return sharedPreferences.getString(SESSION_USER_NAME,"");
     }
 
     /**
