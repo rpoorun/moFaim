@@ -27,8 +27,6 @@ public class Review {
         this.dateAndTime = dateAndTime;
     }
 
-
-
     public String getUsername() {
         return username;
     }
